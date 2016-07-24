@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'kommando'
+
+3.times do
+  k = Kommando.run "rake"
+
+  if k.code == 0
+    print "."
+  else
+    puts k.out
+    raise "Fail"
+  end
+end

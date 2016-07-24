@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -e
+
+git diff-index --quiet --cached HEAD
+if [[ $? != 0 ]]; then
+  echo "git dirty."
+  exit 1
+fi
+
+rake
+bin/stress
+
+echo
+head CHANGELOG.md
+echo
+echo "Changelog ok?"
+read
+
+bin/version
+echo "Version ok?"
+read
+
+echo "Release to rubygems?"
+read
+echo "Sure?"
+read
+echo "Double sure?"
+bundle exec rake release
